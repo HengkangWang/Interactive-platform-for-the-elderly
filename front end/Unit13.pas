@@ -1,0 +1,61 @@
+unit Unit13;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+
+type
+  TForm13 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Button4: TButton;
+    Memo1: TMemo;
+    Button1: TButton;
+    Label4: TLabel;
+    Label3: TLabel;
+    Edit1: TEdit;
+    procedure Button4Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form13: TForm13;
+
+implementation
+
+uses unit8,unit12, Unit3;
+
+{$R *.dfm}
+
+procedure TForm13.Button4Click(Sender: TObject);
+begin
+hide;
+Form8.show;
+end;
+
+procedure TForm13.Button1Click(Sender: TObject);
+begin
+with DataModule3.Query5 do
+  begin
+  close;
+  DataModule3.Query5.SQL.Clear;
+  DataModule3.Query5.SQL.Add('update SMessage set content=:a where SMID =:b');
+  DataModule3.Query5.ParamByName('a').Value:=Memo1.Lines.Text;
+  DataModule3.Query5.ParamByName('b').Value:=Edit1.Text;
+  DataModule3.Query5.ExecSQL;
+  application.MessageBox('修改成功！','提示',0+64);
+  hide;
+  Form8.Show;
+  DataModule3.DataSource1.DataSet.Close;
+  DataModule3.DataSource1.DataSet.Open;
+  end;
+end;
+
+end.

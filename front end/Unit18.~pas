@@ -1,0 +1,59 @@
+unit Unit18;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+
+type
+  TForm18 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label4: TLabel;
+    Button4: TButton;
+    Memo1: TMemo;
+    Label3: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    procedure Button4Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form18: TForm18;
+
+implementation
+
+uses Unit8, Unit3;
+
+{$R *.dfm}
+
+procedure TForm18.Button4Click(Sender: TObject);
+begin
+hide;
+Form8.show;
+end;
+
+procedure TForm18.Button1Click(Sender: TObject);
+begin
+with DataModule3.Query7 do
+  begin
+  close;
+  DataModule3.Query7.SQL.Clear;
+  DataModule3.Query7.SQL.Add('update HMessage set content=:a where HMID =:b');
+  DataModule3.Query7.ParamByName('a').Value:=Memo1.Lines.Text;
+  DataModule3.Query7.ParamByName('b').Value:=Edit1.Text;
+  DataModule3.Query7.ExecSQL;
+  application.MessageBox('修改成功！','提示',0+64);
+  hide;
+  Form8.Show;
+  end;
+end;
+
+end.
